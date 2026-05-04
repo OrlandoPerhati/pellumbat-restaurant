@@ -1,0 +1,20 @@
+{
+  "name": "restaurant-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wedding, events, bar, and restaurant website. Static frontend on Cloudflare Pages, API on Pages Functions, data in Cloudflare D1.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "wrangler pages dev",
+    "check": "node --check server.js && node --check public/script.js && node --check public/admin.js",
+    "db:create": "wrangler d1 create pellumbat-e-paqes",
+    "db:schema:local": "wrangler d1 execute pellumbat-e-paqes --local --file=./schema.sql",
+    "db:seed:local": "wrangler d1 execute pellumbat-e-paqes --local --file=./seed.sql",
+    "db:schema:remote": "wrangler d1 execute pellumbat-e-paqes --remote --file=./schema.sql",
+    "db:seed:remote": "wrangler d1 execute pellumbat-e-paqes --remote --file=./seed.sql",
+    "deploy": "wrangler pages deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}

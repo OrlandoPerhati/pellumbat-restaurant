@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pëllumbat e Paqes Admin</title>
+    <meta name="description" content="Reservation dashboard for Pëllumbat e Paqes." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-body">
+    <!-- Admin header: gives staff quick access to the public website, dashboard tabs, refresh, and logout. -->
+    <header class="admin-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">PP</span>
+        <span>Pëllumbat e Paqes</span>
+      </a>
+      <nav class="admin-nav" aria-label="Admin navigation">
+        <a href="/" data-admin-i18n="nav.website">Website</a>
+        <button class="language-toggle admin-language-toggle" type="button" data-admin-language-toggle aria-label="Switch language">English</button>
+        <button class="ghost-button is-hidden" type="button" data-admin-tab="reservations" data-admin-i18n="nav.reservations">Reservations</button>
+        <button class="ghost-button is-hidden" type="button" data-admin-tab="menu" data-admin-i18n="nav.menu">Menu</button>
+        <button class="button button-primary is-hidden" type="button" data-refresh>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12a9 9 0 0 1-15.4 6.4L3 16M3 21v-5h5M3 12A9 9 0 0 1 18.4 5.6L21 8M21 3v5h-5" />
+          </svg>
+          <span data-admin-i18n="nav.refresh">Refresh</span>
+        </button>
+        <button class="ghost-button is-hidden" type="button" data-logout data-admin-i18n="nav.logout">Log out</button>
+      </nav>
+    </header>
+
+    <main class="admin-shell">
+      <!-- Login panel: protects the dashboard while keeping the prototype simple and local. -->
+      <section class="login-panel" data-login-panel aria-labelledby="login-title">
+        <div>
+          <p class="eyebrow" data-admin-i18n="login.eyebrow">Protected area</p>
+          <h1 id="login-title" data-admin-i18n="login.title">Admin login</h1>
+          <p data-admin-i18n="login.copy">Use the local admin password to manage reservations and menu items.</p>
+        </div>
+        <form class="login-form" data-login-form>
+          <label>
+            <span data-admin-i18n="login.password">Password</span>
+            <input type="password" name="password" autocomplete="current-password" required />
+          </label>
+          <button class="button button-primary" type="submit" data-admin-i18n="login.button">Log in</button>
+          <p class="form-note" data-login-note aria-live="polite"></p>
+        </form>
+      </section>
+
+      <!-- Admin app: hidden until login succeeds, then controlled by admin.js. -->
+      <section class="admin-app is-hidden" data-admin-app>
+        <!-- Summary: high-level reservation counts for a fast daily overview. -->
+        <section class="admin-hero" aria-labelledby="admin-title">
+        <div>
+          <p class="eyebrow" data-admin-i18n="dashboard.eyebrow">Admin dashboard</p>
+          <h1 id="admin-title" data-admin-i18n="dashboard.title">Reservations</h1>
+          <p data-admin-i18n="dashboard.copy">Review incoming table requests and move each booking through its current status.</p>
+        </div>
+        <div class="admin-stats" aria-label="Reservation summary">
+          <article>
+            <span data-stat="total">0</span>
+            <p data-admin-i18n="stats.total">Total</p>
+          </article>
+          <article>
+            <span data-stat="new">0</span>
+            <p data-admin-i18n="stats.new">New</p>
+          </article>
+          <article>
+            <span data-stat="confirmed">0</span>
+            <p data-admin-i18n="stats.confirmed">Confirmed</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Reservations panel: staff can filter requests and update each booking's status. -->
+      <section class="admin-panel" data-admin-panel="reservations" aria-labelledby="reservation-list-title">
+        <div class="admin-panel-header">
+          <h2 id="reservation-list-title" data-admin-i18n="reservations.requests">Requests</h2>
+          <label class="filter-control">
+            <span data-admin-i18n="reservations.status">Status</span>
+            <select data-filter>
+              <option value="All" data-admin-i18n="status.all">All</option>
+              <option value="New" data-admin-i18n="status.new">New</option>
+              <option value="Confirmed" data-admin-i18n="status.confirmed">Confirmed</option>
+              <option value="Waiting" data-admin-i18n="status.waiting">Waiting</option>
+              <option value="Completed" data-admin-i18n="status.completed">Completed</option>
+              <option value="Canceled" data-admin-i18n="status.canceled">Canceled</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="reservation-list" data-reservation-list>
+          <p class="empty-state" data-admin-i18n="reservations.loading">Loading reservations...</p>
+        </div>
+      </section>
+
+        <!-- Menu editor: lets staff update the public menu without touching index.html. -->
+        <section class="admin-panel is-hidden" data-admin-panel="menu" aria-labelledby="menu-editor-title">
+          <div class="admin-panel-header">
+            <h2 id="menu-editor-title" data-admin-i18n="menu.editor">Menu editor</h2>
+            <p class="admin-hint" data-admin-i18n="menu.hint">Changes appear on the public menu immediately after refresh.</p>
+          </div>
+
+          <form class="menu-editor-form" data-menu-form>
+            <label>
+              <span data-admin-i18n="menu.category">Category</span>
+              <select name="category" required>
+                <option value="small" data-admin-i18n="menu.small">Small plates</option>
+                <option value="mains" data-admin-i18n="menu.mains">Mains</option>
+                <option value="drinks" data-admin-i18n="menu.drinks">Drinks</option>
+              </select>
+            </label>
+            <label>
+              <span data-admin-i18n="menu.name">Name</span>
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              <span data-admin-i18n="menu.price">Price</span>
+              <input type="text" name="price" placeholder="$18" required />
+            </label>
+            <label>
+              <span data-admin-i18n="menu.tags">Tags</span>
+              <input type="text" name="tags" placeholder="Vegetarian, Seasonal" data-admin-i18n-placeholder="menu.tagsPlaceholder" />
+            </label>
+            <label class="form-wide">
+              <span data-admin-i18n="menu.description">Description</span>
+              <textarea name="description" rows="3" required></textarea>
+            </label>
+            <label class="check-control">
+              <input type="checkbox" name="available" checked />
+              <span data-admin-i18n="menu.availablePublic">Available on public menu</span>
+            </label>
+            <button class="button button-primary" type="submit" data-admin-i18n="menu.add">Add item</button>
+            <p class="form-note" data-menu-note aria-live="polite"></p>
+          </form>
+
+          <div class="admin-menu-list" data-admin-menu-list>
+            <p class="empty-state" data-admin-i18n="menu.loading">Loading menu...</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div class="admin-modal is-hidden" data-confirm-modal role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="admin-modal-panel">
+        <p class="eyebrow" data-admin-i18n="modal.eyebrow">Confirm action</p>
+        <h2 id="confirm-title" data-admin-i18n="modal.title">Delete reservation?</h2>
+        <p data-confirm-message data-admin-i18n="modal.copy">This will permanently remove the reservation from the local records.</p>
+        <div class="admin-modal-actions">
+          <button class="ghost-button" type="button" data-confirm-cancel data-admin-i18n="modal.keep">Keep reservation</button>
+          <button class="ghost-button danger" type="button" data-confirm-delete data-admin-i18n="modal.delete">Delete reservation</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

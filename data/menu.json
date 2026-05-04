@@ -1,0 +1,56 @@
+[
+  {
+    "id": "menu-eventesh",
+    "category": "small",
+    "name": "Menu per evente",
+    "description": "Opsione ushqimi per dasma, fejesa, ditelindje dhe festa familjare. Detajet konfirmohen nga stafi.",
+    "price": "Sipas kerkeses",
+    "tags": "Evente, Familjare",
+    "available": true
+  },
+  {
+    "id": "antipasta-festive",
+    "category": "small",
+    "name": "Antipasta festive",
+    "description": "Pjata te kombinuara per fillimin e darkes, te pershtatura sipas llojit te eventit.",
+    "price": "Sipas kerkeses",
+    "tags": "Dasma, Fejesa",
+    "available": true
+  },
+  {
+    "id": "pjata-kryesore-eventi",
+    "category": "mains",
+    "name": "Pjata kryesore per evente",
+    "description": "Menu kryesore per grupe, dasma dhe festa private. Cmimet finale shtohen sapo te jene gati.",
+    "price": "Sipas kerkeses",
+    "tags": "Grupe, Me rezervim",
+    "available": true
+  },
+  {
+    "id": "restaurant-ditor",
+    "category": "mains",
+    "name": "Restaurant ditor",
+    "description": "Opsione restaurant dhe tavolina me rezervim. Kontaktoni stafin per disponueshmerine.",
+    "price": "Sipas kerkeses",
+    "tags": "Restaurant",
+    "available": true
+  },
+  {
+    "id": "bar-pije",
+    "category": "drinks",
+    "name": "Bar dhe pije",
+    "description": "Sherbim bari per evente, darka familjare dhe vizita te perditshme.",
+    "price": "Sipas kerkeses",
+    "tags": "Bar, Evente",
+    "available": true
+  },
+  {
+    "id": "whatsapp-oferte",
+    "category": "drinks",
+    "name": "Kerko oferte ne WhatsApp",
+    "description": "Per menu, cmime dhe detaje eventesh, na shkruani direkt ne WhatsApp ose telefononi.",
+    "price": "+355 686264646",
+    "tags": "Kontakt",
+    "available": true
+  }
+]

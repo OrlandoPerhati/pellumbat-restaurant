@@ -1,0 +1,20 @@
+# Dependencies — installed by `npm install`, not source code
+node_modules/
+
+# Local secrets — never commit passwords, API keys, etc.
+.env
+.dev.vars
+
+# Wrangler local state — local D1 database, build cache, logs
+.wrangler/
+
+# Local data — only used by the legacy Node server, contains reservations
+data/reservations.json
+server.*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

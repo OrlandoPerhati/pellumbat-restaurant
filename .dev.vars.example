@@ -1,0 +1,3 @@
+# Copy this file to .dev.vars (which is gitignored) for local `wrangler pages dev`.
+# In production set the same values via: wrangler pages secret put ADMIN_PASSWORD
+ADMIN_PASSWORD=change-this-locally

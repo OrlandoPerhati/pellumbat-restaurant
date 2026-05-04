@@ -1,0 +1,8 @@
+name = "pellumbat-e-paqes"
+compatibility_date = "2024-11-12"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pellumbat-e-paqes"
+database_id = "40db3bf4-8d97-4c95-b896-9f027864daf1"

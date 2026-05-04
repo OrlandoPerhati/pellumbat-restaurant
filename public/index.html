@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Pellumbat e Paqes organizon dasma, evente, bar dhe restaurant me pervoje 19-vjecare dhe parking falas. Kontakt dhe WhatsApp: +355 686264646."
+    />
+    <meta name="theme-color" content="#1f2522" />
+    <title>Pëllumbat e Paqes | Dasma, Evente, Bar & Restaurant</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header: fixed navigation that stays available while visitors scroll. -->
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Pëllumbat e Paqes home">
+        <span class="brand-mark">PP</span>
+        <span>Pëllumbat e Paqes</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Open navigation</span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav>
+        <a href="#menu" data-i18n="nav.menu">Menu</a>
+        <a href="#events" data-i18n="nav.events">Events</a>
+        <a href="#story" data-i18n="nav.story">Story</a>
+        <a href="#visit" data-i18n="nav.visit">Visit</a>
+        <a class="nav-cta" href="#reserve" data-i18n="nav.reserve">Reserve</a>
+        <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">English</button>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- Hero: the first impression of the restaurant, with photo, brand message, and primary calls to action. -->
+      <section class="hero" aria-labelledby="hero-title">
+        <img src="assets/venue/exterior-main.png" alt="Exterior entrance of Pëllumbat e Paqes at night with illuminated signage." />
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Seasonal plates. Easy evenings. Good tables.</p>
+          <h1 id="hero-title">Pëllumbat e Paqes</h1>
+          <p class="hero-copy" data-i18n="hero.copy">
+            Ambient per dasma, evente, bar dhe restaurant me pervoje 19-vjecare, parking falas dhe kontakt direkt ne WhatsApp.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button button-primary" href="#reserve">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+              </svg>
+              <span data-i18n="hero.reserve">Reserve a table</span>
+            </a>
+            <a class="button button-secondary" href="#menu">
+              <span data-i18n="hero.menu">View menu</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Food moments: visual editorial tiles inspired by modern restaurant sites. -->
+      <section class="food-moments" aria-label="Dining highlights">
+        <article>
+          <span data-i18n="moments.share.label">Share</span>
+          <h2 data-i18n="moments.share.title">Small plates for the middle of the table.</h2>
+        </article>
+        <article>
+          <span data-i18n="moments.gather.label">Gather</span>
+          <h2 data-i18n="moments.gather.title">Slow dinners with the lights turned low.</h2>
+        </article>
+        <article>
+          <span data-i18n="moments.toast.label">Toast</span>
+          <h2 data-i18n="moments.toast.title">Seasonal drinks, house spritzes, and bright pours.</h2>
+        </article>
+      </section>
+
+      <!-- Gallery: real venue photos from Pëllumbat e Paqes, showing event styling and table setups. -->
+      <section class="section gallery-section" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="gallery.eyebrow">Galeria</p>
+          <h2 id="gallery-title" data-i18n="gallery.title">Ambiente për çdo event</h2>
+          <p data-i18n="gallery.copy">
+            Shikoni disa nga dekorimet, tavolinat dhe sallat e përgatitura për dasma, fejesa, ditëlindje dhe evente
+            familjare.
+          </p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-large">
+            <img src="assets/venue/wedding-hall-blue.png" alt="Wedding hall with blue tablecloths and a glowing forever sign." loading="lazy" />
+            <figcaption data-i18n="gallery.wedding">Dasma</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/venue/engagement-stage.png" alt="Engagement stage with white flowers and illuminated ring sign." loading="lazy" />
+            <figcaption data-i18n="gallery.engagement">Fejesa</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/venue/birthday-setup.png" alt="Pink first birthday balloon display with butterflies." loading="lazy" />
+            <figcaption data-i18n="gallery.birthday">Ditëlindje</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/venue/long-dining-table.png" alt="Long dining table set with plates, drinks, flowers, and candles." loading="lazy" />
+            <figcaption data-i18n="gallery.dining">Tavolina festive</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/venue/anniversary-setup.png" alt="Sixtieth celebration setup with candelabra and balloon decor." loading="lazy" />
+            <figcaption data-i18n="gallery.anniversary">Përvjetorë</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Quick info: puts the practical details guests look for near the top of the page. -->
+      <section class="quick-info" aria-label="Restaurant highlights">
+        <div>
+          <span data-i18n="quick.tonight">Tonight</span>
+          <strong data-i18n="quick.tonightValue">Wedding & Events</strong>
+        </div>
+        <div>
+          <span data-i18n="quick.experience">Experience</span>
+          <strong data-i18n="quick.experienceValue">19 years</strong>
+        </div>
+        <div>
+          <span data-i18n="quick.parking">Parking</span>
+          <strong data-i18n="quick.parkingValue">Free parking</strong>
+        </div>
+        <div>
+          <span data-i18n="quick.address">Address</span>
+          <strong>Rruga e Arbërit 1</strong>
+        </div>
+      </section>
+
+      <!-- Menu: rendered from the server by script.js so admins can change items without editing HTML. -->
+      <section class="section menu-section" id="menu" aria-labelledby="menu-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="menu.eyebrow">Current menu</p>
+          <h2 id="menu-title" data-i18n="menu.title">Menuja e restaurantit</h2>
+          <p data-i18n="menu.copy">
+            Menuja dhe cmimet finale do te shtohen sapo te jene gati. Per momentin mund te shikoni kategorite kryesore dhe te na kontaktoni per oferta per evente.
+          </p>
+        </div>
+
+        <div class="menu-tabs" role="tablist" aria-label="Menu categories">
+          <button class="tab is-active" type="button" role="tab" aria-selected="true" data-menu-tab="small" data-i18n="menu.small">Small plates</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-menu-tab="mains" data-i18n="menu.mains">Mains</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-menu-tab="drinks" data-i18n="menu.drinks">Drinks</button>
+        </div>
+
+        <div class="menu-list" data-menu-list>
+          <p class="empty-state" data-i18n="menu.loading">Loading today&apos;s menu...</p>
+        </div>
+      </section>
+
+      <!-- Events: a conversion section for private dinners and larger celebrations. -->
+      <section class="events-section" id="events" aria-labelledby="events-title">
+        <div>
+          <p class="eyebrow" data-i18n="events.eyebrow">Private events</p>
+          <h2 id="events-title" data-i18n="events.title">A back room for birthdays, rehearsal dinners, and long tables.</h2>
+        </div>
+        <div class="events-copy">
+          <p data-i18n="events.copy">
+            The private dining room seats up to 28 guests with a family-style menu, optional wine pairings, and
+            space for flowers, cake, and a little speech that gets everyone misty.
+          </p>
+          <a class="button button-primary" href="https://wa.me/355686264646?text=Pershendetje%2C%20dua%20te%20pyes%20per%20nje%20event." target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m4 4 8 8 8-8M4 4h16v16H4V4Z" />
+            </svg>
+            <span data-i18n="events.cta">Ask about events</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Story: brand-building content that explains the restaurant's personality and values. -->
+      <section class="feature-band" id="story" aria-labelledby="story-title">
+        <div class="feature-copy">
+          <p class="eyebrow" data-i18n="story.eyebrow">Our table</p>
+          <h2 id="story-title" data-i18n="story.title">Built for family nights, date nights, and the regulars who become both.</h2>
+          <p data-i18n="story.copy">
+            Pëllumbat e Paqes organizon dasma, evente, bar dhe restaurant. Kontaktoni ekipin për të planifikuar
+            datën, tavolinën ose eventin tuaj.
+          </p>
+        </div>
+        <div class="feature-grid" aria-label="Restaurant details">
+          <article>
+            <span>01</span>
+            <h3 data-i18n="story.card1.title">Market-driven</h3>
+            <p data-i18n="story.card1.copy">Produce leads the menu, with specials changing as the best ingredients arrive.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3 data-i18n="story.card2.title">Handmade daily</h3>
+            <p data-i18n="story.card2.copy">Pasta, breads, sauces, and desserts are made in house with a calm kind of care.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3 data-i18n="story.card3.title">Private dinners</h3>
+            <p data-i18n="story.card3.copy">Host birthdays, rehearsal dinners, and family celebrations in the back dining room.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Visit: hours, address, and contact actions grouped for fast scanning. -->
+      <section class="section visit-section" id="visit" aria-labelledby="visit-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="visit.eyebrow">Plan a visit</p>
+          <h2 id="visit-title" data-i18n="visit.title">Hours and location</h2>
+        </div>
+
+        <div class="visit-layout">
+          <div class="hours-panel">
+            <dl>
+              <div>
+                <dt data-i18n="visit.wedThu">Dasma</dt>
+                <dd data-i18n="visit.byReservation">Me rezervim</dd>
+              </div>
+              <div>
+                <dt data-i18n="visit.friSat">Evente</dt>
+                <dd data-i18n="visit.byReservation">Me rezervim</dd>
+              </div>
+              <div>
+                <dt data-i18n="visit.sun">Bar</dt>
+                <dd data-i18n="visit.contactForHours">Kontaktoni për orarin</dd>
+              </div>
+              <div>
+                <dt data-i18n="visit.monTue">Restaurant</dt>
+                <dd data-i18n="visit.contactForHours">Kontaktoni për orarin</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="location-panel">
+            <h3 data-i18n="visit.contactTitle">Kontakt & WhatsApp</h3>
+            <p data-i18n="visit.copy">Pellumbat e Paqes ndodhet ne Rruga e Arberit 1, Tirane, Albania. Ambienti ofron parking falas. Per dasma, evente, bar ose restaurant, telefononi ose shkruani ne WhatsApp: +355 686264646.</p>
+            <div class="contact-row">
+              <a href="https://www.google.com/maps/search/?api=1&query=P%C3%ABllumbat%20e%20Paqes%2C%20Rruga%20e%20Arb%C3%ABrit%201%2C%20Tiran%C3%AB%2C%20Albania" target="_blank" rel="noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 21s7-5.4 7-12a7 7 0 1 0-14 0c0 6.6 7 12 7 12Z" />
+                  <path d="M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                </svg>
+                Rruga e Arbërit 1, Tiranë
+              </a>
+              <a href="tel:+355686264646">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.7.6 2.5a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6.5 6.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.5.6A2 2 0 0 1 22 16.9Z" />
+                </svg>
+                +355 686264646
+              </a>
+              <a href="https://wa.me/355686264646" target="_blank" rel="noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m4 4 8 8 8-8M4 4h16v16H4V4Z" />
+                </svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reservation form: submits to the Node API and saves requests to local JSON storage. -->
+      <section class="reserve-section" id="reserve" aria-labelledby="reserve-title">
+        <div class="reserve-copy">
+          <p class="eyebrow" data-i18n="reserve.eyebrow">Reservations</p>
+          <h2 id="reserve-title" data-i18n="reserve.title">Save a table</h2>
+          <p data-i18n="reserve.copy">
+            For parties of seven or more, private events, or accessibility requests, call the restaurant and the team
+            will help you find the right setup.
+          </p>
+        </div>
+
+        <form class="reserve-form" data-reserve-form>
+          <label>
+            <span data-i18n="form.name">Name</span>
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label>
+            <span data-i18n="form.email">Email</span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label>
+            <span data-i18n="form.date">Date</span>
+            <input type="date" name="date" required data-reserve-date />
+          </label>
+          <label>
+            <span data-i18n="form.time">Time</span>
+            <select name="time" required data-time-select>
+              <option value="" data-i18n="form.select">Select</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="17:30">5:30 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="18:30">6:30 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="19:30">7:30 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="20:30">8:30 PM</option>
+              <option value="21:00">9:00 PM</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="form.party">Party size</span>
+            <select name="party" required>
+              <option value="" data-i18n="form.select">Select</option>
+              <option value="2 guests" data-i18n="form.guests2">2 guests</option>
+              <option value="3 guests" data-i18n="form.guests3">3 guests</option>
+              <option value="4 guests" data-i18n="form.guests4">4 guests</option>
+              <option value="5 guests" data-i18n="form.guests5">5 guests</option>
+              <option value="6 guests" data-i18n="form.guests6">6 guests</option>
+              <option value="7+ guests" data-i18n="form.guests7">7+ guests</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="form.phone">Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" />
+          </label>
+          <label class="form-wide">
+            <span data-i18n="form.notes">Notes</span>
+            <textarea name="notes" rows="4" placeholder="Occasion, accessibility request, patio preference" data-i18n-placeholder="form.notesPlaceholder"></textarea>
+          </label>
+          <button class="button button-primary" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
+            <span data-i18n="form.submit">Request reservation</span>
+          </button>
+          <p class="form-note" data-form-note aria-live="polite"></p>
+        </form>
+
+        <form class="reserve-form cancel-form" data-cancel-form>
+          <div class="form-wide">
+            <p class="eyebrow" data-i18n="cancel.eyebrow">Cancel request</p>
+            <h3 data-i18n="cancel.title">Need to cancel?</h3>
+            <p data-i18n="cancel.copy">
+              Use the email and cancellation code from your request. Wedding and event cancellations are still reviewed
+              by the team.
+            </p>
+          </div>
+          <label>
+            <span data-i18n="form.email">Email</span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label>
+            <span data-i18n="cancel.code">Cancellation code</span>
+            <input type="text" name="cancellationCode" required />
+          </label>
+          <button class="button button-secondary cancel-button" type="submit">
+            <span data-i18n="cancel.submit">Cancel request</span>
+          </button>
+          <p class="form-note" data-cancel-note aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <!-- Mobile-only sticky CTA: keeps the most important action thumb-friendly on phones. -->
+    <a class="mobile-reserve-bar" href="#reserve">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 2v4M16 2v4M3 10h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+      </svg>
+      <span data-i18n="hero.reserve">Reserve a table</span>
+    </a>
+
+    <footer class="site-footer">
+      <p>Pëllumbat e Paqes</p>
+      <p><a href="admin.html" data-i18n="footer.admin">Admin</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
