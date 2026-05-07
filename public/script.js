@@ -550,5 +550,112 @@ window.addEventListener(
   { passive: true },
 );
 
+// --- Animated counter -------------------------------------------------------
+// Any element with [data-counter="N"] counts from 0 to N once it scrolls into view.
+// Uses requestAnimationFrame for buttery smooth interpolation rather than setInterval.
+function runCounter(element) {
+  const target = Number(element.dataset.counter || 0);
+  const suffix = element.dataset.counterSuffix || "";
+  if (!target || reduceMotion.matches) {
+    element.textContent = `${target}${suffix}`;
+    return;
+  }
+  const duration = 1400;
+  const start = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    // Ease-out cubic: starts fast, slows toward the end.
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(target * eased);
+    element.textContent = `${value}${suffix}`;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const counterTargets = document.querySelectorAll("[data-counter]");
+if ("IntersectionObserver" in window && counterTargets.length) {
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          runCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.6 },
+  );
+  counterTargets.forEach((el) => counterObserver.observe(el));
+}
+
+// --- Scroll-to-top button ---------------------------------------------------
+const scrollTopBtn = document.querySelector("[data-scroll-top]");
+if (scrollTopBtn) {
+  const updateScrollTop = () => {
+    if (window.scrollY > window.innerHeight * 0.6) {
+      scrollTopBtn.removeAttribute("hidden");
+    } else {
+      scrollTopBtn.setAttribute("hidden", "");
+    }
+  };
+  updateScrollTop();
+  window.addEventListener("scroll", updateScrollTop, { passive: true });
+  scrollTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  });
+}
+
+// --- Gallery lightbox -------------------------------------------------------
+const lightbox = document.querySelector("[data-lightbox]");
+const lightboxImg = document.querySelector("[data-lightbox-img]");
+const lightboxCaption = document.querySelector("[data-lightbox-caption]");
+const lightboxClose = document.querySelector("[data-lightbox-close]");
+
+function openLightbox(src, alt, caption) {
+  if (!lightbox || !lightboxImg) return;
+  lightboxImg.src = src;
+  lightboxImg.alt = alt || "";
+  lightboxCaption.textContent = caption || "";
+  lightbox.removeAttribute("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  if (!lightbox) return;
+  lightbox.setAttribute("hidden", "");
+  lightboxImg.src = "";
+  document.body.style.overflow = "";
+}
+
+document.querySelectorAll(".gallery-grid figure").forEach((figure) => {
+  figure.addEventListener("click", () => {
+    const img = figure.querySelector("img");
+    const caption = figure.querySelector("figcaption");
+    if (!img) return;
+    openLightbox(img.src, img.alt, caption?.textContent);
+  });
+  // Keyboard accessibility: focus + Enter/Space opens the lightbox.
+  figure.tabIndex = 0;
+  figure.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      figure.click();
+    }
+  });
+});
+
+if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+if (lightbox) {
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+}
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && lightbox && !lightbox.hasAttribute("hidden")) {
+    closeLightbox();
+  }
+});
+
 applyTranslations();
 loadMenu();
