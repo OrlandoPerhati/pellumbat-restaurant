@@ -419,12 +419,22 @@ languageToggle.addEventListener("click", () => {
   applyTranslations();
 });
 
+// Tracks a pending auto-dismiss timer so a fast second submission cancels the first one.
+let formNoteTimer = null;
+
 // Sends the reservation request to the backend and displays success/error feedback.
 reserveForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(reserveForm);
   const payload = Object.fromEntries(data.entries());
   const name = String(payload.name || "").trim().split(" ")[0] || "there";
+
+  // Cancel any pending auto-dismiss so the new message isn't wiped instantly.
+  if (formNoteTimer) {
+    clearTimeout(formNoteTimer);
+    formNoteTimer = null;
+  }
+  formNote.classList.remove("is-fading");
 
   // Turnstile injects a hidden input named "cf-turnstile-response" once the visitor passes verification.
   // If it's missing, the widget hasn't finished yet — block submission rather than risk a server rejection.
@@ -448,9 +458,7 @@ reserveForm.addEventListener("submit", async (event) => {
       throw new Error(result.error || t("form.error"));
     }
 
-    formNote.textContent = result.reservation?.cancellationCode
-      ? t("form.successWithCode", { name, code: result.reservation.cancellationCode })
-      : t("form.success", { name });
+    formNote.textContent = t("form.success", { name });
     formNote.classList.remove("is-error");
     reserveForm.reset();
     // Reset the Turnstile widget — tokens are single-use, so the next submission needs a fresh one.
@@ -458,6 +466,16 @@ reserveForm.addEventListener("submit", async (event) => {
       window.turnstile.reset();
     }
     await loadAvailability();
+    // Auto-dismiss the success message after a few seconds — customers also get an email,
+    // so the on-page note is just a quick acknowledgment.
+    if (formNoteTimer) clearTimeout(formNoteTimer);
+    formNoteTimer = setTimeout(() => {
+      formNote.classList.add("is-fading");
+      setTimeout(() => {
+        formNote.textContent = "";
+        formNote.classList.remove("is-fading");
+      }, 420);
+    }, 5000);
   } catch (error) {
     formNote.textContent = error.message || t("form.error");
     formNote.classList.add("is-error");
