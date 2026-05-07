@@ -7,6 +7,7 @@ import {
   rowToReservation,
   validateReservation,
 } from "../../_shared.js";
+import { sendReservationEmails } from "../../_email.js";
 
 export async function onRequestGet({ request, env }) {
   const denied = await requireAdmin(request, env);
@@ -49,6 +50,10 @@ export async function onRequestPost({ request, env }) {
       reservation.createdAt,
     )
     .run();
+
+  // Send confirmation emails. Failures inside the helper are logged but never thrown,
+  // so a Resend outage cannot block a customer from completing a booking.
+  await sendReservationEmails(reservation, env);
 
   return jsonResponse({ reservation }, 201);
 }
