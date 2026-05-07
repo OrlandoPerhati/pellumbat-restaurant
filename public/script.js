@@ -426,6 +426,14 @@ reserveForm.addEventListener("submit", async (event) => {
   const payload = Object.fromEntries(data.entries());
   const name = String(payload.name || "").trim().split(" ")[0] || "there";
 
+  // Turnstile injects a hidden input named "cf-turnstile-response" once the visitor passes verification.
+  // If it's missing, the widget hasn't finished yet — block submission rather than risk a server rejection.
+  if (!payload["cf-turnstile-response"]) {
+    formNote.textContent = "Please wait a moment for the verification widget, then try again.";
+    formNote.classList.add("is-error");
+    return;
+  }
+
   formNote.textContent = t("form.sending");
 
   try {
@@ -445,10 +453,17 @@ reserveForm.addEventListener("submit", async (event) => {
       : t("form.success", { name });
     formNote.classList.remove("is-error");
     reserveForm.reset();
+    // Reset the Turnstile widget — tokens are single-use, so the next submission needs a fresh one.
+    if (window.turnstile && typeof window.turnstile.reset === "function") {
+      window.turnstile.reset();
+    }
     await loadAvailability();
   } catch (error) {
     formNote.textContent = error.message || t("form.error");
     formNote.classList.add("is-error");
+    if (window.turnstile && typeof window.turnstile.reset === "function") {
+      window.turnstile.reset();
+    }
   }
 });
 

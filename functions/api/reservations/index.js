@@ -1,11 +1,14 @@
 import {
   availabilityForDate,
+  cleanString,
+  getClientIp,
   jsonResponse,
   partyCount,
   readJsonBody,
   requireAdmin,
   rowToReservation,
   validateReservation,
+  verifyTurnstileToken,
 } from "../../_shared.js";
 import { sendReservationEmails } from "../../_email.js";
 
@@ -21,6 +24,14 @@ export async function onRequestGet({ request, env }) {
 
 export async function onRequestPost({ request, env }) {
   const input = await readJsonBody(request);
+
+  // Verify the Turnstile token before doing anything else — cheapest way to drop bot traffic.
+  const turnstileToken = cleanString(input["cf-turnstile-response"]);
+  const verification = await verifyTurnstileToken(turnstileToken, getClientIp(request), env);
+  if (!verification.success) {
+    return jsonResponse({ error: "Verification failed. Please refresh the page and try again." }, 400);
+  }
+
   const { reservation, error } = validateReservation(input);
   if (error) return jsonResponse({ error }, 400);
 

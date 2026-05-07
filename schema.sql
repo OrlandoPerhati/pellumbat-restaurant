@@ -35,3 +35,12 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
+
+-- Tracks failed admin login attempts per client IP so we can lock out brute-force attackers.
+-- Successful logins delete the row; expired windows reset on the next attempt.
+CREATE TABLE IF NOT EXISTS login_attempts (
+  ip TEXT PRIMARY KEY,
+  attempts INTEGER NOT NULL DEFAULT 0,
+  first_attempt_at INTEGER NOT NULL,
+  locked_until INTEGER NOT NULL DEFAULT 0
+);
