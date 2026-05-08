@@ -353,7 +353,15 @@
           <p class="form-note" data-form-note aria-live="polite"></p>
         </form>
 
-        <form class="reserve-form cancel-form" data-cancel-form>
+        <!-- Toggle: keeps the cancel form out of the way for the 99% of visitors who are booking, not canceling. -->
+        <button class="cancel-toggle" type="button" data-cancel-toggle aria-expanded="false" aria-controls="cancel-form">
+          <span data-i18n="cancel.toggle">Need to cancel an existing reservation?</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+
+        <form id="cancel-form" class="reserve-form cancel-form" data-cancel-form hidden>
           <div class="form-wide">
             <p class="eyebrow" data-i18n="cancel.eyebrow">Cancel request</p>
             <h3 data-i18n="cancel.title">Need to cancel?</h3>

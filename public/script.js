@@ -120,6 +120,7 @@ const translations = {
     "form.successWithCode":
       "Faleminderit, {name}. Kerkesa juaj u ruajt. Kodi per anulim eshte {code}. Per dasma dhe evente, do t'ju kontaktojme per te konfirmuar detajet.",
     "form.error": "Rezervimi nuk u dergua. Ju lutemi telefononi ose shkruani ne WhatsApp.",
+    "cancel.toggle": "Doni te anuloni nje rezervim ekzistues?",
     "cancel.eyebrow": "Anulim",
     "cancel.title": "Doni ta anuloni kerkesen?",
     "cancel.copy":
@@ -227,6 +228,7 @@ const translations = {
     "form.successWithCode":
       "Thanks, {name}. Your request was saved. Your cancellation code is {code}. For weddings and events, we will contact you back to confirm the details.",
     "form.error": "Could not send the request. Please call or message us on WhatsApp.",
+    "cancel.toggle": "Need to cancel an existing reservation?",
     "cancel.eyebrow": "Cancellation",
     "cancel.title": "Need to cancel?",
     "cancel.copy":
@@ -674,6 +676,26 @@ document.addEventListener("keydown", (event) => {
     closeLightbox();
   }
 });
+
+// --- Cancel form toggle -----------------------------------------------------
+// Hides the cancel form by default. Click expands it; click again collapses.
+const cancelToggle = document.querySelector("[data-cancel-toggle]");
+if (cancelToggle && cancelForm) {
+  cancelToggle.addEventListener("click", () => {
+    const isOpen = cancelForm.hasAttribute("hidden");
+    if (isOpen) {
+      cancelForm.removeAttribute("hidden");
+      cancelToggle.setAttribute("aria-expanded", "true");
+      cancelToggle.classList.add("is-open");
+      // Move focus into the form for keyboard users so they can start typing immediately.
+      cancelForm.querySelector("input")?.focus();
+    } else {
+      cancelForm.setAttribute("hidden", "");
+      cancelToggle.setAttribute("aria-expanded", "false");
+      cancelToggle.classList.remove("is-open");
+    }
+  });
+}
 
 applyTranslations();
 loadMenu();
