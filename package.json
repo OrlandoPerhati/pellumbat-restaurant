@@ -12,9 +12,11 @@
     "db:seed:local": "wrangler d1 execute pellumbat-e-paqes --local --file=./seed.sql",
     "db:schema:remote": "wrangler d1 execute pellumbat-e-paqes --remote --file=./schema.sql",
     "db:seed:remote": "wrangler d1 execute pellumbat-e-paqes --remote --file=./seed.sql",
-    "deploy": "wrangler pages deploy"
+    "deploy": "wrangler pages deploy",
+    "images": "node scripts/convert-images.js"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "wrangler": "^3.78.0"
   }
 }

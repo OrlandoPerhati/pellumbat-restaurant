@@ -35,6 +35,49 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&display=swap" />
 
+    <!-- JSON-LD structured data: helps Google show this venue as a rich card in search results
+         with name, address, phone, photo, and "wedding venue" classification. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["Restaurant", "EventVenue"],
+          "@id": "https://pellumbat-e-paqes.pages.dev/#venue",
+          "name": "Pëllumbat e Paqes",
+          "description": "Ambient mikpritës me përvojë 19-vjeçare për dasma, fejesa, ditëlindje dhe evente private. Parking falas.",
+          "url": "https://pellumbat-e-paqes.pages.dev/",
+          "image": "https://pellumbat-e-paqes.pages.dev/assets/venue/exterior-main.png",
+          "telephone": "+355686264646",
+          "priceRange": "$$",
+          "servesCuisine": ["Mediterranean", "Albanian"],
+          "acceptsReservations": true,
+          "hasMap": "https://www.google.com/maps/search/?api=1&query=P%C3%ABllumbat%20e%20Paqes%2C%20Rruga%20e%20Arb%C3%ABrit%201%2C%20Tiran%C3%AB%2C%20Albania",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rruga e Arbërit 1",
+            "addressLocality": "Tiranë",
+            "addressCountry": "AL"
+          },
+          "amenityFeature": [
+            { "@type": "LocationFeatureSpecification", "name": "Free parking", "value": true },
+            { "@type": "LocationFeatureSpecification", "name": "Wedding venue", "value": true },
+            { "@type": "LocationFeatureSpecification", "name": "Private events", "value": true }
+          ],
+          "sameAs": ["https://wa.me/355686264646"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://pellumbat-e-paqes.pages.dev/#website",
+          "url": "https://pellumbat-e-paqes.pages.dev/",
+          "name": "Pëllumbat e Paqes",
+          "inLanguage": ["sq", "en"],
+          "publisher": { "@id": "https://pellumbat-e-paqes.pages.dev/#venue" }
+        }
+      ]
+    }
+    </script>
+
     <link rel="stylesheet" href="styles.css" />
     <!-- Cloudflare Turnstile: invisible-by-default CAPTCHA replacement that protects the reservation form from bots. -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
@@ -67,7 +110,7 @@
     <main id="top">
       <!-- Hero: the first impression of the restaurant, with photo, brand message, and primary calls to action. -->
       <section class="hero" aria-labelledby="hero-title">
-        <img src="assets/venue/exterior-main.png" alt="Exterior entrance of Pëllumbat e Paqes at night with illuminated signage." />
+        <img src="assets/venue/exterior-main.webp" alt="Exterior entrance of Pëllumbat e Paqes at night with illuminated signage." fetchpriority="high" />
         <div class="hero-shade" aria-hidden="true"></div>
         <div class="hero-content">
           <p class="eyebrow" data-i18n="hero.eyebrow">Seasonal plates. Easy evenings. Good tables.</p>
@@ -120,23 +163,23 @@
         </div>
         <div class="gallery-grid">
           <figure class="gallery-large">
-            <img src="assets/venue/wedding-hall-blue.png" alt="Wedding hall with blue tablecloths and a glowing forever sign." loading="lazy" />
+            <img src="assets/venue/wedding-hall-blue.webp" alt="Wedding hall with blue tablecloths and a glowing forever sign." loading="lazy" />
             <figcaption data-i18n="gallery.wedding">Dasma</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/engagement-stage.png" alt="Engagement stage with white flowers and illuminated ring sign." loading="lazy" />
+            <img src="assets/venue/engagement-stage.webp" alt="Engagement stage with white flowers and illuminated ring sign." loading="lazy" />
             <figcaption data-i18n="gallery.engagement">Fejesa</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/birthday-setup.png" alt="Pink first birthday balloon display with butterflies." loading="lazy" />
+            <img src="assets/venue/birthday-setup.webp" alt="Pink first birthday balloon display with butterflies." loading="lazy" />
             <figcaption data-i18n="gallery.birthday">Ditëlindje</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/long-dining-table.png" alt="Long dining table set with plates, drinks, flowers, and candles." loading="lazy" />
+            <img src="assets/venue/long-dining-table.webp" alt="Long dining table set with plates, drinks, flowers, and candles." loading="lazy" />
             <figcaption data-i18n="gallery.dining">Tavolina festive</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/anniversary-setup.png" alt="Sixtieth celebration setup with candelabra and balloon decor." loading="lazy" />
+            <img src="assets/venue/anniversary-setup.webp" alt="Sixtieth celebration setup with candelabra and balloon decor." loading="lazy" />
             <figcaption data-i18n="gallery.anniversary">Përvjetorë</figcaption>
           </figure>
         </div>
