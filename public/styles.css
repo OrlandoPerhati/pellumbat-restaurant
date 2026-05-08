@@ -862,6 +862,12 @@ textarea {
   animation: cancelFormReveal 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+/* Author rules with display:grid above tie on specificity with the browser's [hidden]
+   rule, but author styles win on source order — so we have to opt back into hiding. */
+.cancel-form[hidden] {
+  display: none;
+}
+
 @keyframes cancelFormReveal {
   from {
     opacity: 0;
