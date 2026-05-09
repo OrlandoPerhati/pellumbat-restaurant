@@ -12,6 +12,8 @@
   --line: rgba(31, 37, 34, 0.14);
   --shadow: 0 20px 60px rgba(22, 25, 23, 0.16);
   --display-font: "Playfair Display", Georgia, "Times New Roman", serif;
+  /* accent-color tints native form controls (checkboxes, date pickers, range sliders) site-wide. */
+  accent-color: var(--clay);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -27,6 +29,8 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
+  /* Removes the gray flash that mobile browsers show on tap. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body.nav-open {
@@ -192,7 +196,10 @@ textarea {
 .hero {
   /* Hero section: full-bleed image with overlay text for the restaurant's first impression. */
   position: relative;
-  min-height: 88vh;
+  /* dvh = dynamic viewport height. On iOS Safari, vh includes the URL bar even when hidden,
+     so the hero jumps when the bar collapses on scroll. dvh adjusts smoothly. */
+  min-height: 88vh; /* fallback for older browsers */
+  min-height: 88dvh;
   display: grid;
   align-items: end;
   overflow: hidden;
@@ -897,6 +904,8 @@ textarea {
   padding: 0 12px;
   background: #fffdf7;
   color: var(--ink);
+  /* iOS Safari zooms the page when an input has font-size below 16px. Forcing 16px prevents that. */
+  font-size: 16px;
 }
 
 .reserve-form textarea {
@@ -1052,7 +1061,8 @@ textarea {
 /* Floating button that returns the visitor to the top with smooth scroll. Hidden until they have scrolled. */
 .scroll-top {
   position: fixed;
-  bottom: 24px;
+  /* max() pushes the button above the iPhone home-indicator on devices with a safe-area inset. */
+  bottom: max(24px, env(safe-area-inset-bottom));
   right: 24px;
   z-index: 25;
   width: 48px;
@@ -1092,7 +1102,8 @@ textarea {
 
 @media (max-width: 620px) {
   .scroll-top {
-    bottom: 80px; /* clears the mobile reserve bar */
+    /* On phones the mobile reserve bar sits at the bottom; lift the scroll button above it. */
+    bottom: calc(76px + env(safe-area-inset-bottom));
     right: 16px;
     width: 44px;
     height: 44px;
@@ -1304,6 +1315,7 @@ textarea {
   padding: 0 12px;
   background: #fffdf7;
   color: var(--ink);
+  font-size: 16px;
 }
 
 .menu-editor-form textarea {
@@ -1680,6 +1692,7 @@ textarea {
 @media (max-width: 620px) {
   .hero {
     min-height: 86vh;
+    min-height: 86dvh;
   }
 
   .hero h1 {
@@ -1756,9 +1769,57 @@ textarea {
 
   .mobile-reserve-bar {
     display: flex;
+    /* Push the bar above the iPhone home-indicator using the safe-area inset. */
+    bottom: max(14px, env(safe-area-inset-bottom));
   }
 
   .site-footer {
     padding-bottom: 86px;
   }
+
+  /* Lightbox: full-bleed on phones so photos take the most space. */
+  .lightbox {
+    padding: 0;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 88vh;
+    border-radius: 0;
+  }
+
+  .lightbox-close {
+    top: max(12px, env(safe-area-inset-top));
+    right: 12px;
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: 16px;
+    right: 16px;
+    margin: 0;
+  }
 }
+
+/* Landscape phones: hero is way too tall at 86dvh. Cap it so headline + CTAs fit one screen. */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .hero {
+    min-height: 100dvh;
+  }
+
+  .hero-content {
+    padding-top: 80px;
+    padding-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 8vw, 4rem);
+    line-height: 1;
+  }
+
+  .hero-copy {
+    font-size: 0.95rem;
+  }
+}
+
