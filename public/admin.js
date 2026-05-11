@@ -1,6 +1,16 @@
 const list = document.querySelector("[data-reservation-list]");
 const filter = document.querySelector("[data-filter]");
+const search = document.querySelector("[data-search]");
 const refresh = document.querySelector("[data-refresh]");
+const csvExportBtn = document.querySelector("[data-csv-export]");
+const viewToggleButtons = document.querySelectorAll("[data-view]");
+const calendarContainer = document.querySelector("[data-reservation-calendar]");
+const calendarMonthLabel = document.querySelector("[data-calendar-month]");
+const calendarWeekdays = document.querySelector("[data-calendar-weekdays]");
+const calendarGrid = document.querySelector("[data-calendar-grid]");
+const calendarDayPanel = document.querySelector("[data-calendar-day-panel]");
+const calendarPrev = document.querySelector("[data-calendar-prev]");
+const calendarNext = document.querySelector("[data-calendar-next]");
 const loginPanel = document.querySelector("[data-login-panel]");
 const loginForm = document.querySelector("[data-login-form]");
 const loginNote = document.querySelector("[data-login-note]");
@@ -27,6 +37,39 @@ let menuItems = [];
 let adminSessionToken = "";
 let pendingDeleteReservationId = "";
 let adminLanguage = localStorage.getItem("pellumbat-language") || "sq";
+let activeView = "list"; // "list" or "calendar"
+let searchQuery = "";
+let calendarCursor = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+let selectedCalendarDate = "";
+
+// --- Tiny toast notification helper ---------------------------------------
+// Replaces window.alert with inline, non-blocking feedback. Auto-dismisses after a few seconds.
+function toast(message, type = "info") {
+  let container = document.querySelector("[data-toast-container]");
+  if (!container) {
+    container = document.createElement("div");
+    container.setAttribute("data-toast-container", "");
+    container.className = "toast-container";
+    document.body.appendChild(container);
+  }
+  const el = document.createElement("div");
+  el.className = `toast toast-${type}`;
+  el.textContent = message;
+  container.appendChild(el);
+  requestAnimationFrame(() => el.classList.add("is-visible"));
+  setTimeout(() => {
+    el.classList.remove("is-visible");
+    setTimeout(() => el.remove(), 320);
+  }, 3500);
+}
+
+function toIsoDate(date) {
+  // Local-time YYYY-MM-DD. toISOString() would shift by timezone, which is wrong for date-only values.
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
 
 // Admin translations reuse the same localStorage key as the public website.
 const adminTranslations = {
@@ -52,6 +95,15 @@ const adminTranslations = {
     "stats.confirmed": "Te konfirmuara",
     "reservations.requests": "Kerkesat",
     "reservations.status": "Statusi",
+    "reservations.search": "Kërko",
+    "reservations.searchPlaceholder": "Emër ose email",
+    "reservations.viewList": "Listë",
+    "reservations.viewCalendar": "Kalendar",
+    "reservations.exportCsv": "Eksporto CSV",
+    "reservations.csvSuccess": "CSV u shkarkua.",
+    "reservations.csvEmpty": "Nuk ka rezervime për të eksportuar.",
+    "reservations.calendarBookings": "rezervime",
+    "reservations.calendarPickDay": "Klikoni një ditë për të parë rezervimet.",
     "reservations.loading": "Po ngarkohen rezervimet...",
     "reservations.none": "Nuk ka rezervime qe perputhen me kete pamje.",
     "reservations.error": "Nuk u ngarkuan rezervimet. Sigurohu qe serveri eshte ndezur.",
@@ -121,6 +173,15 @@ const adminTranslations = {
     "stats.confirmed": "Confirmed",
     "reservations.requests": "Requests",
     "reservations.status": "Status",
+    "reservations.search": "Search",
+    "reservations.searchPlaceholder": "Name or email",
+    "reservations.viewList": "List",
+    "reservations.viewCalendar": "Calendar",
+    "reservations.exportCsv": "Export CSV",
+    "reservations.csvSuccess": "CSV downloaded.",
+    "reservations.csvEmpty": "No reservations to export.",
+    "reservations.calendarBookings": "bookings",
+    "reservations.calendarPickDay": "Click a day to see its reservations.",
     "reservations.loading": "Loading reservations...",
     "reservations.none": "No reservation requests match this view.",
     "reservations.error": "Could not load reservations. Make sure the server is running.",
@@ -228,10 +289,24 @@ function renderStats() {
   stats.confirmed.textContent = reservations.filter((item) => item.status === "Confirmed").length;
 }
 
+// Applies the current filter, search, and (when in calendar mode) selected-day to the full reservation list.
+function getVisibleReservations() {
+  const selectedStatus = filter ? filter.value : "All";
+  const q = searchQuery.toLowerCase();
+  return reservations.filter((item) => {
+    if (selectedStatus !== "All" && item.status !== selectedStatus) return false;
+    if (activeView === "calendar" && selectedCalendarDate && item.date !== selectedCalendarDate) return false;
+    if (!q) return true;
+    return (
+      (item.name || "").toLowerCase().includes(q) ||
+      (item.email || "").toLowerCase().includes(q)
+    );
+  });
+}
+
 // Renders reservation cards and status dropdowns from the API response.
 function renderReservations() {
-  const selected = filter.value;
-  const visible = selected === "All" ? reservations : reservations.filter((item) => item.status === selected);
+  const visible = getVisibleReservations();
 
   renderStats();
 
@@ -291,6 +366,7 @@ async function loadReservations() {
   const data = await response.json();
   reservations = data.reservations || [];
   renderReservations();
+  if (activeView === "calendar") renderCalendar();
 }
 
 // Renders the menu editor list, including availability toggles and delete buttons.
@@ -346,7 +422,7 @@ async function updateStatus(id, status) {
   });
 
   if (!response.ok) {
-    alert(adminT("reservations.updateError"));
+    toast(adminT("reservations.updateError"), "error");
   }
 
   await loadReservations();
@@ -372,7 +448,7 @@ function closeDeleteReservationModal() {
 async function deleteReservation(id) {
   const response = await fetch(`/api/reservations/${id}`, { method: "DELETE", headers: authHeaders() });
   if (!response.ok) {
-    alert(adminT("reservations.deleteError"));
+    toast(adminT("reservations.deleteError"), "error");
   }
 
   closeDeleteReservationModal();
@@ -417,24 +493,33 @@ async function updateMenuAvailability(id, available) {
   });
 
   if (!response.ok) {
-    alert(adminT("menu.updateError"));
+    toast(adminT("menu.updateError"), "error");
   }
 
   await loadMenuItems();
 }
 
-// Removes a menu item after staff confirm the destructive action.
-async function deleteMenuItem(id) {
-  const item = menuItems.find((entry) => entry.id === id);
-  if (!item || !confirm(adminT("menu.confirmDelete", { name: item.name }))) {
-    return;
-  }
+// Tracks which menu item is queued for deletion via the confirm modal.
+let pendingDeleteMenuItemId = "";
 
+function openDeleteMenuItemModal(id) {
+  const item = menuItems.find((entry) => entry.id === id);
+  if (!item) return;
+  pendingDeleteMenuItemId = id;
+  pendingDeleteReservationId = "";
+  confirmMessage.textContent = adminT("menu.confirmDelete", { name: item.name });
+  confirmModal.classList.remove("is-hidden");
+  confirmDelete.focus();
+}
+
+// Removes a menu item once staff confirm via the shared modal.
+async function deleteMenuItem(id) {
   const response = await fetch(`/api/menu/${id}`, { method: "DELETE", headers: authHeaders() });
   if (!response.ok) {
-    alert(adminT("menu.deleteError"));
+    toast(adminT("menu.deleteError"), "error");
   }
-
+  pendingDeleteMenuItemId = "";
+  confirmModal.classList.add("is-hidden");
   await loadMenuItems();
 }
 
@@ -514,6 +599,8 @@ confirmCancel.addEventListener("click", closeDeleteReservationModal);
 confirmDelete.addEventListener("click", () => {
   if (pendingDeleteReservationId) {
     deleteReservation(pendingDeleteReservationId);
+  } else if (pendingDeleteMenuItemId) {
+    deleteMenuItem(pendingDeleteMenuItemId);
   }
 });
 
@@ -529,7 +616,18 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-filter.addEventListener("change", renderReservations);
+filter.addEventListener("change", () => {
+  renderReservations();
+  if (activeView === "calendar") renderCalendar();
+});
+
+if (search) {
+  search.addEventListener("input", (event) => {
+    searchQuery = event.target.value.trim();
+    renderReservations();
+  });
+}
+
 refresh.addEventListener("click", () => Promise.all([loadReservations(), loadMenuItems()]));
 loginForm.addEventListener("submit", login);
 logoutButton.addEventListener("click", logout);
@@ -540,6 +638,9 @@ adminLanguageToggle.addEventListener("click", () => {
   applyAdminTranslations();
   renderReservations();
   renderMenuItems();
+  // Clear the cached weekday labels so they re-render in the new language.
+  if (calendarWeekdays) calendarWeekdays.innerHTML = "";
+  if (activeView === "calendar") renderCalendar();
 });
 
 adminTabs.forEach((tab) => {
@@ -554,9 +655,181 @@ adminMenuList.addEventListener("change", (event) => {
 
 adminMenuList.addEventListener("click", (event) => {
   if (event.target.matches("[data-delete-menu]")) {
-    deleteMenuItem(event.target.dataset.deleteMenu);
+    openDeleteMenuItemModal(event.target.dataset.deleteMenu);
   }
 });
+
+// --- CSV export -------------------------------------------------------------
+// Builds a CSV from the *currently visible* reservations (so filter + search affect the export)
+// and triggers a browser download. CSV fields are quoted and inner quotes escaped per RFC 4180.
+function escapeCsvField(value) {
+  const s = String(value ?? "");
+  if (/[",\n\r]/.test(s)) return '"' + s.replaceAll('"', '""') + '"';
+  return s;
+}
+
+function exportCsv() {
+  const rows = getVisibleReservations();
+  if (!rows.length) {
+    toast(adminT("reservations.csvEmpty"), "info");
+    return;
+  }
+  const headers = ["Date", "Time", "Name", "Email", "Phone", "Party", "Status", "Notes", "CancellationCode", "CreatedAt"];
+  const lines = [headers.join(",")];
+  for (const r of rows) {
+    lines.push(
+      [
+        r.date,
+        r.time,
+        r.name,
+        r.email,
+        r.phone,
+        r.party,
+        r.status,
+        r.notes,
+        r.cancellationCode,
+        r.createdAt,
+      ]
+        .map(escapeCsvField)
+        .join(","),
+    );
+  }
+  // BOM keeps Excel happy when the CSV contains UTF-8 (Albanian diacritics).
+  const blob = new Blob(["﻿" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `reservations-${toIsoDate(new Date())}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  toast(adminT("reservations.csvSuccess"), "success");
+}
+
+if (csvExportBtn) csvExportBtn.addEventListener("click", exportCsv);
+
+// --- View toggle (List vs Calendar) ----------------------------------------
+function setActiveView(view) {
+  activeView = view;
+  viewToggleButtons.forEach((btn) => {
+    const isActive = btn.dataset.view === view;
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-selected", String(isActive));
+  });
+  calendarContainer.classList.toggle("is-hidden", view !== "calendar");
+  if (view === "calendar") {
+    renderCalendar();
+  } else {
+    selectedCalendarDate = "";
+    renderReservations();
+  }
+}
+
+viewToggleButtons.forEach((btn) => {
+  btn.addEventListener("click", () => setActiveView(btn.dataset.view));
+});
+
+// --- Calendar renderer ------------------------------------------------------
+// Renders the month grid for `calendarCursor`. Each cell shows the day number plus
+// a small badge with the number of bookings for that date. Clicking a cell scopes
+// the list below to that day (selectedCalendarDate filter).
+function renderCalendar() {
+  if (!calendarGrid) return;
+
+  const year = calendarCursor.getFullYear();
+  const month = calendarCursor.getMonth();
+  const firstOfMonth = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  // Week starts on Monday (European convention). getDay(): Sun=0..Sat=6 → shift so Mon=0..Sun=6.
+  const startWeekday = (firstOfMonth.getDay() + 6) % 7;
+
+  const monthLabel = new Intl.DateTimeFormat(adminLanguage === "sq" ? "sq-AL" : "en", {
+    month: "long",
+    year: "numeric",
+  }).format(firstOfMonth);
+  if (calendarMonthLabel) calendarMonthLabel.textContent = monthLabel;
+
+  if (calendarWeekdays && !calendarWeekdays.children.length) {
+    const labels = adminLanguage === "sq"
+      ? ["Hën", "Mar", "Mër", "Enj", "Pre", "Sht", "Die"]
+      : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    calendarWeekdays.innerHTML = labels.map((l) => `<span>${l}</span>`).join("");
+  }
+
+  // Count active (non-canceled) bookings per ISO date for the current month.
+  const counts = new Map();
+  for (const r of reservations) {
+    if (r.status === "Canceled") continue;
+    counts.set(r.date, (counts.get(r.date) || 0) + 1);
+  }
+
+  const today = toIsoDate(new Date());
+  let html = "";
+  // Leading blanks for days before the 1st of the month.
+  for (let i = 0; i < startWeekday; i += 1) {
+    html += `<div class="calendar-cell is-empty"></div>`;
+  }
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    const dateIso = toIsoDate(new Date(year, month, day));
+    const count = counts.get(dateIso) || 0;
+    const classes = ["calendar-cell"];
+    if (count > 0) classes.push("has-bookings");
+    if (dateIso === today) classes.push("is-today");
+    if (dateIso === selectedCalendarDate) classes.push("is-selected");
+    html += `
+      <button type="button" class="${classes.join(" ")}" data-calendar-day="${dateIso}">
+        <span class="calendar-day-num">${day}</span>
+        ${count > 0 ? `<span class="calendar-day-count">${count}</span>` : ""}
+      </button>
+    `;
+  }
+  calendarGrid.innerHTML = html;
+
+  // Day panel below the grid: shows reservations for the selected day (or a hint to pick one).
+  if (selectedCalendarDate) {
+    calendarDayPanel.classList.remove("is-hidden");
+    const dayReservations = reservations.filter((r) => r.date === selectedCalendarDate);
+    const dateLabel = new Intl.DateTimeFormat(adminLanguage === "sq" ? "sq-AL" : "en", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    }).format(new Date(`${selectedCalendarDate}T12:00:00`));
+    calendarDayPanel.innerHTML = `
+      <h4>${escapeHtml(dateLabel)}</h4>
+      ${dayReservations.length === 0 ? `<p class="empty-state">${adminT("reservations.none")}</p>` : ""}
+    `;
+    renderReservations();
+  } else {
+    calendarDayPanel.classList.remove("is-hidden");
+    calendarDayPanel.innerHTML = `<p class="admin-hint">${adminT("reservations.calendarPickDay")}</p>`;
+    renderReservations();
+  }
+}
+
+if (calendarPrev) {
+  calendarPrev.addEventListener("click", () => {
+    calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() - 1, 1);
+    selectedCalendarDate = "";
+    renderCalendar();
+  });
+}
+if (calendarNext) {
+  calendarNext.addEventListener("click", () => {
+    calendarCursor = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth() + 1, 1);
+    selectedCalendarDate = "";
+    renderCalendar();
+  });
+}
+if (calendarGrid) {
+  calendarGrid.addEventListener("click", (event) => {
+    const cell = event.target.closest("[data-calendar-day]");
+    if (!cell) return;
+    const date = cell.dataset.calendarDay;
+    selectedCalendarDate = selectedCalendarDate === date ? "" : date;
+    renderCalendar();
+  });
+}
 
 applyAdminTranslations();
 checkSession();

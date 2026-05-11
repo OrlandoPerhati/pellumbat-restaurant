@@ -76,21 +76,51 @@
       <section class="admin-panel" data-admin-panel="reservations" aria-labelledby="reservation-list-title">
         <div class="admin-panel-header">
           <h2 id="reservation-list-title" data-admin-i18n="reservations.requests">Requests</h2>
-          <label class="filter-control">
-            <span data-admin-i18n="reservations.status">Status</span>
-            <select data-filter>
-              <option value="All" data-admin-i18n="status.all">All</option>
-              <option value="New" data-admin-i18n="status.new">New</option>
-              <option value="Confirmed" data-admin-i18n="status.confirmed">Confirmed</option>
-              <option value="Waiting" data-admin-i18n="status.waiting">Waiting</option>
-              <option value="Completed" data-admin-i18n="status.completed">Completed</option>
-              <option value="Canceled" data-admin-i18n="status.canceled">Canceled</option>
-            </select>
-          </label>
+          <div class="admin-toolbar">
+            <label class="filter-control toolbar-search">
+              <span data-admin-i18n="reservations.search">Search</span>
+              <input type="search" data-search placeholder="Name or email" data-admin-i18n-placeholder="reservations.searchPlaceholder" />
+            </label>
+            <label class="filter-control">
+              <span data-admin-i18n="reservations.status">Status</span>
+              <select data-filter>
+                <option value="All" data-admin-i18n="status.all">All</option>
+                <option value="New" data-admin-i18n="status.new">New</option>
+                <option value="Confirmed" data-admin-i18n="status.confirmed">Confirmed</option>
+                <option value="Waiting" data-admin-i18n="status.waiting">Waiting</option>
+                <option value="Completed" data-admin-i18n="status.completed">Completed</option>
+                <option value="Canceled" data-admin-i18n="status.canceled">Canceled</option>
+              </select>
+            </label>
+            <div class="toolbar-actions">
+              <div class="view-toggle" role="tablist" aria-label="View mode">
+                <button class="view-toggle-btn is-active" type="button" role="tab" aria-selected="true" data-view="list" data-admin-i18n="reservations.viewList">List</button>
+                <button class="view-toggle-btn" type="button" role="tab" aria-selected="false" data-view="calendar" data-admin-i18n="reservations.viewCalendar">Calendar</button>
+              </div>
+              <button class="ghost-button" type="button" data-csv-export>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                <span data-admin-i18n="reservations.exportCsv">Export CSV</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="reservation-list" data-reservation-list>
           <p class="empty-state" data-admin-i18n="reservations.loading">Loading reservations...</p>
+        </div>
+
+        <!-- Calendar view: month grid with reservation counts per day. Hidden until the user toggles it on. -->
+        <div class="reservation-calendar is-hidden" data-reservation-calendar>
+          <header class="calendar-header">
+            <button class="ghost-button calendar-nav" type="button" data-calendar-prev aria-label="Previous month">&lsaquo;</button>
+            <h3 data-calendar-month></h3>
+            <button class="ghost-button calendar-nav" type="button" data-calendar-next aria-label="Next month">&rsaquo;</button>
+          </header>
+          <div class="calendar-weekdays" data-calendar-weekdays aria-hidden="true"></div>
+          <div class="calendar-grid" data-calendar-grid></div>
+          <div class="calendar-day-panel is-hidden" data-calendar-day-panel></div>
         </div>
       </section>
 
