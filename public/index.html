@@ -101,6 +101,7 @@
         <a href="#menu" data-i18n="nav.menu">Menu</a>
         <a href="#events" data-i18n="nav.events">Events</a>
         <a href="#story" data-i18n="nav.story">Story</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
         <a href="#visit" data-i18n="nav.visit">Visit</a>
         <a class="nav-cta" href="#reserve" data-i18n="nav.reserve">Reserve</a>
         <button class="language-toggle" type="button" data-language-toggle aria-label="Switch language">English</button>
@@ -246,6 +247,43 @@
         </div>
       </section>
 
+      <!-- Testimonials: social proof from past guests. Placeholder quotes for now — replace via admin or seed later. -->
+      <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="testimonials.eyebrow">Vlerësime</p>
+          <h2 id="testimonials-title" data-i18n="testimonials.title">Çfarë thonë mysafirët tanë</h2>
+        </div>
+        <div class="testimonial-grid">
+          <article class="testimonial">
+            <p class="testimonial-quote" data-i18n="testimonials.q1">
+              Eventi i fejesës u organizua në mënyrë të përkryer. Stafi shumë i kujdesshëm dhe ambienti tepër mikpritës. E rekomandojmë me gjithë zemër.
+            </p>
+            <footer>
+              <strong data-i18n="testimonials.q1.name">Ana & Bekim</strong>
+              <span data-i18n="testimonials.q1.role">Fejesë, Maj 2025</span>
+            </footer>
+          </article>
+          <article class="testimonial">
+            <p class="testimonial-quote" data-i18n="testimonials.q2">
+              Festuam 60-vjetorin e martesës këtu dhe nuk mund të zgjidhnim më mirë. Salla u dekorua mrekullueshëm dhe kuzhina ishte e shkëlqyer.
+            </p>
+            <footer>
+              <strong data-i18n="testimonials.q2.name">Familja Hoxha</strong>
+              <span data-i18n="testimonials.q2.role">Përvjetor 60-vjeçar</span>
+            </footer>
+          </article>
+          <article class="testimonial">
+            <p class="testimonial-quote" data-i18n="testimonials.q3">
+              Kemi organizuar disa ditëlindje familjare në Pëllumbat e Paqes. Çdo herë komunikim i shpejtë dhe ekzekutim profesional. Faleminderit ekipi!
+            </p>
+            <footer>
+              <strong data-i18n="testimonials.q3.name">Klejdi M.</strong>
+              <span data-i18n="testimonials.q3.role">Ditëlindje familjare</span>
+            </footer>
+          </article>
+        </div>
+      </section>
+
       <!-- Story: brand-building content that explains the restaurant's personality and values. -->
       <section class="feature-band" id="story" aria-labelledby="story-title">
         <div class="feature-copy">
@@ -324,6 +362,40 @@
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- FAQ: native <details> accordion. No JS needed — the browser handles open/close, keyboard, and screen-reader support. -->
+      <section class="faq-section" id="faq" aria-labelledby="faq-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="faq.eyebrow">Pyetjet më të shpeshta</p>
+          <h2 id="faq-title" data-i18n="faq.title">Çfarë duan të dinë mysafirët</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary data-i18n="faq.q1">Sa mysafirë mund të presë salla?</summary>
+            <p data-i18n="faq.a1">Salla kryesore mban deri në 350 mysafirë për dasma dhe evente të mëdha. Për grupe më të vogla mund të organizojmë seksione më intime.</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q2">A ofron ambienti parking?</summary>
+            <p data-i18n="faq.a2">Po — kemi parking falas për të gjithë mysafirët, me hyrje direkt nga rruga kryesore. Stafi ndihmon për të orientuar makinat gjatë eventeve të mëdha.</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q3">A merreni edhe me kuzhinën?</summary>
+            <p data-i18n="faq.a3">Po. Ofrojmë menu të plota për dasma, fejesa dhe ditëlindje, të personalizueshme sipas dëshirës dhe numrit të mysafirëve. Detajet i konfirmojmë gjatë takimit paraprak.</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q4">Sa para një ngjarje duhet ta rezervoj datën?</summary>
+            <p data-i18n="faq.a4">Për dasma rekomandohet të rezervoni 3–6 muaj para datës. Për evente më të vogla, 3–4 javë mjafton në shumicën e rasteve.</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q5">A mund të sjellim dekorime tonat?</summary>
+            <p data-i18n="faq.a5">Sigurisht. Mund të bashkëpunojmë me dekoratorë të jashtëm, ose të ofrojmë vetë dekorimet tradicionale të sallës. Diskutojmë opsionet gjatë takimit.</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q6">Si bëhet pagesa dhe çfarë politike anulimi keni?</summary>
+            <p data-i18n="faq.a6">Konfirmimi i datës kërkon një paradhënie. Politika e anulimit varet nga afati i njoftimit dhe lloji i eventit — detajet specifikohen në marrëveshje.</p>
+          </details>
         </div>
       </section>
 

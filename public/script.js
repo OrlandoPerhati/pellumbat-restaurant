@@ -38,6 +38,7 @@ const translations = {
     "nav.menu": "Menuja",
     "nav.events": "Evente",
     "nav.story": "Rreth nesh",
+    "nav.faq": "Pyetje",
     "nav.visit": "Kontakt",
     "nav.reserve": "Rezervo",
     "language.button": "English",
@@ -83,6 +84,40 @@ const translations = {
     "events.copy":
       "Me pervoje 19-vjecare, Pellumbat e Paqes bashkon restaurantin, barin dhe atmosferen festive ne nje vend. Na shkruani ne WhatsApp per disponueshmeri.",
     "events.cta": "Shkruaj ne WhatsApp",
+    "testimonials.eyebrow": "Vlerësime",
+    "testimonials.title": "Çfarë thonë mysafirët tanë",
+    "testimonials.q1":
+      "Eventi i fejesës u organizua në mënyrë të përkryer. Stafi shumë i kujdesshëm dhe ambienti tepër mikpritës. E rekomandojmë me gjithë zemër.",
+    "testimonials.q1.name": "Ana & Bekim",
+    "testimonials.q1.role": "Fejesë, Maj 2025",
+    "testimonials.q2":
+      "Festuam 60-vjetorin e martesës këtu dhe nuk mund të zgjidhnim më mirë. Salla u dekorua mrekullueshëm dhe kuzhina ishte e shkëlqyer.",
+    "testimonials.q2.name": "Familja Hoxha",
+    "testimonials.q2.role": "Përvjetor 60-vjeçar",
+    "testimonials.q3":
+      "Kemi organizuar disa ditëlindje familjare në Pëllumbat e Paqes. Çdo herë komunikim i shpejtë dhe ekzekutim profesional. Faleminderit ekipi!",
+    "testimonials.q3.name": "Klejdi M.",
+    "testimonials.q3.role": "Ditëlindje familjare",
+    "faq.eyebrow": "Pyetjet më të shpeshta",
+    "faq.title": "Çfarë duan të dinë mysafirët",
+    "faq.q1": "Sa mysafirë mund të presë salla?",
+    "faq.a1":
+      "Salla kryesore mban deri në 350 mysafirë për dasma dhe evente të mëdha. Për grupe më të vogla mund të organizojmë seksione më intime.",
+    "faq.q2": "A ofron ambienti parking?",
+    "faq.a2":
+      "Po — kemi parking falas për të gjithë mysafirët, me hyrje direkt nga rruga kryesore. Stafi ndihmon për të orientuar makinat gjatë eventeve të mëdha.",
+    "faq.q3": "A merreni edhe me kuzhinën?",
+    "faq.a3":
+      "Po. Ofrojmë menu të plota për dasma, fejesa dhe ditëlindje, të personalizueshme sipas dëshirës dhe numrit të mysafirëve. Detajet i konfirmojmë gjatë takimit paraprak.",
+    "faq.q4": "Sa para një ngjarje duhet ta rezervoj datën?",
+    "faq.a4":
+      "Për dasma rekomandohet të rezervoni 3–6 muaj para datës. Për evente më të vogla, 3–4 javë mjafton në shumicën e rasteve.",
+    "faq.q5": "A mund të sjellim dekorime tonat?",
+    "faq.a5":
+      "Sigurisht. Mund të bashkëpunojmë me dekoratorë të jashtëm, ose të ofrojmë vetë dekorimet tradicionale të sallës. Diskutojmë opsionet gjatë takimit.",
+    "faq.q6": "Si bëhet pagesa dhe çfarë politike anulimi keni?",
+    "faq.a6":
+      "Konfirmimi i datës kërkon një paradhënie. Politika e anulimit varet nga afati i njoftimit dhe lloji i eventit — detajet specifikohen në marrëveshje.",
     "story.eyebrow": "Rreth nesh",
     "story.title": "Dasma, evente, bar dhe restaurant ne nje ambient mikprites.",
     "story.copy":
@@ -146,6 +181,7 @@ const translations = {
     "nav.menu": "Menu",
     "nav.events": "Events",
     "nav.story": "About",
+    "nav.faq": "FAQ",
     "nav.visit": "Contact",
     "nav.reserve": "Reserve",
     "language.button": "Shqip",
@@ -191,6 +227,40 @@ const translations = {
     "events.copy":
       "With 19 years of experience, Pellumbat e Paqes brings together the restaurant, bar, and event atmosphere in one place. Message us on WhatsApp to discuss availability.",
     "events.cta": "Message on WhatsApp",
+    "testimonials.eyebrow": "Testimonials",
+    "testimonials.title": "What our guests say",
+    "testimonials.q1":
+      "Our engagement event was organized perfectly. The team was attentive and the venue was warm and welcoming. We recommend it wholeheartedly.",
+    "testimonials.q1.name": "Ana & Bekim",
+    "testimonials.q1.role": "Engagement, May 2025",
+    "testimonials.q2":
+      "We celebrated our 60th wedding anniversary here — we couldn't have picked a better place. The hall was beautifully decorated and the food was excellent.",
+    "testimonials.q2.name": "The Hoxha family",
+    "testimonials.q2.role": "60th anniversary",
+    "testimonials.q3":
+      "We've held several family birthdays at Pëllumbat e Paqes. Every time the communication is fast and the execution is professional. Thank you, team!",
+    "testimonials.q3.name": "Klejdi M.",
+    "testimonials.q3.role": "Family birthday",
+    "faq.eyebrow": "Frequently asked",
+    "faq.title": "What guests want to know",
+    "faq.q1": "How many guests can the hall hold?",
+    "faq.a1":
+      "The main hall holds up to 350 guests for weddings and large events. For smaller groups we can arrange more intimate sections.",
+    "faq.q2": "Is there parking on site?",
+    "faq.a2":
+      "Yes — free parking for all guests, with direct entry from the main road. Our team helps direct cars during large events.",
+    "faq.q3": "Do you also handle catering?",
+    "faq.a3":
+      "Yes. We offer full menus for weddings, engagements, and birthdays, customised to your wishes and guest count. The details are confirmed during the planning meeting.",
+    "faq.q4": "How far in advance should I book?",
+    "faq.a4":
+      "For weddings, we recommend booking 3–6 months ahead. For smaller events, 3–4 weeks is usually enough.",
+    "faq.q5": "Can we bring our own decorations?",
+    "faq.a5":
+      "Absolutely. We can work with outside decorators, or provide the venue's traditional decor ourselves. We discuss the options during the planning meeting.",
+    "faq.q6": "How does payment and cancellation work?",
+    "faq.a6":
+      "Confirming the date requires a deposit. The cancellation policy depends on the notice given and the type of event — details are spelled out in the agreement.",
     "story.eyebrow": "About us",
     "story.title": "Wedding, events, bar, and restaurant in one welcoming space.",
     "story.copy":
