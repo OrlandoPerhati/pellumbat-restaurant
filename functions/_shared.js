@@ -227,8 +227,8 @@ export function validateMenuItem(input, existingId) {
   if (!["small", "mains", "drinks"].includes(item.category)) {
     return { error: "Choose a valid menu category." };
   }
-  if (!item.name || !item.description || !item.price) {
-    return { error: "Name, description, and price are required." };
+  if (!item.name || !item.price) {
+    return { error: "Name and price are required." };
   }
   return { item };
 }

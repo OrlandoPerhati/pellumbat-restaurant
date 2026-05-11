@@ -276,6 +276,30 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+// Renders one menu item card. `skipPrimaryTag` is true when we're rendering inside a sub-group
+// header so we don't repeat the group label as a pill on every card.
+function renderMenuItemHtml(item, index, skipPrimaryTag) {
+  const allTags = String(item.tags || "")
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+  const visibleTags = skipPrimaryTag ? allTags.slice(1) : allTags;
+  const tagsHtml = visibleTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
+
+  return `
+    <article class="menu-item" style="--enter-delay: ${index * 40}ms">
+      <div>
+        <div class="menu-item-heading">
+          <h3>${escapeHtml(item.name)}</h3>
+          <strong>${escapeHtml(item.price)}</strong>
+        </div>
+        ${item.description ? `<p>${escapeHtml(item.description)}</p>` : ""}
+        ${tagsHtml ? `<div class="menu-tags">${tagsHtml}</div>` : ""}
+      </div>
+    </article>
+  `;
+}
+
 // Renders the public menu from server data instead of hard-coded HTML.
 function renderMenu() {
   if (!menuLoaded) {
@@ -290,29 +314,29 @@ function renderMenu() {
     return;
   }
 
-  menuList.innerHTML = visible
-    .map((item, index) => {
-      const tags = String(item.tags || "")
-        .split(",")
-        .map((tag) => tag.trim())
-        .filter(Boolean)
-        .map((tag) => `<span>${escapeHtml(tag)}</span>`)
-        .join("");
+  // Group items by their first tag so a category with sub-types (e.g., drinks has Kafeteri/Birrë/etc.)
+  // renders with sub-headings instead of one long flat list.
+  const groups = new Map();
+  for (const item of visible) {
+    const primaryTag = (String(item.tags || "").split(",")[0] || "").trim();
+    if (!groups.has(primaryTag)) groups.set(primaryTag, []);
+    groups.get(primaryTag).push(item);
+  }
 
-      return `
-        <article class="menu-item" style="--enter-delay: ${index * 70}ms">
-          <div>
-            <div class="menu-item-heading">
-              <h3>${escapeHtml(item.name)}</h3>
-              <strong>${escapeHtml(item.price)}</strong>
-            </div>
-            <p>${escapeHtml(item.description)}</p>
-            ${tags ? `<div class="menu-tags">${tags}</div>` : ""}
-          </div>
-        </article>
-      `;
-    })
-    .join("");
+  const hasMeaningfulGroups = groups.size > 1 || (groups.size === 1 && [...groups.keys()][0] !== "");
+
+  if (!hasMeaningfulGroups) {
+    menuList.innerHTML = visible.map((item, index) => renderMenuItemHtml(item, index, false)).join("");
+    return;
+  }
+
+  let html = "";
+  let index = 0;
+  for (const [tag, items] of groups) {
+    if (tag) html += `<h3 class="menu-group-heading">${escapeHtml(tag)}</h3>`;
+    html += items.map((item) => renderMenuItemHtml(item, index++, Boolean(tag))).join("");
+  }
+  menuList.innerHTML = html;
 }
 
 function positionTabIndicator() {

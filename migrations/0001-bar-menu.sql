@@ -1,14 +1,9 @@
--- Initial menu seed. Re-runnable: INSERT OR REPLACE keeps the canonical state.
+-- One-off migration: replace placeholder drinks with the real bar menu.
+-- Idempotent: re-running clears the same placeholders and re-inserts the same rows.
 
--- Events / food categories
-INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags, available, position) VALUES
-  ('menu-eventesh',          'small', 'Menu per evente',          'Opsione ushqimi per dasma, fejesa, ditelindje dhe festa familjare. Detajet konfirmohen nga stafi.', 'Sipas kerkeses', 'Evente, Familjare', 1, 1),
-  ('antipasta-festive',      'small', 'Antipasta festive',        'Pjata te kombinuara per fillimin e darkes, te pershtatura sipas llojit te eventit.',                'Sipas kerkeses', 'Dasma, Fejesa',     1, 2),
-  ('pjata-kryesore-eventi',  'mains', 'Pjata kryesore per evente','Menu kryesore per grupe, dasma dhe festa private. Cmimet finale shtohen sapo te jene gati.',         'Sipas kerkeses', 'Grupe, Me rezervim',1, 3);
+DELETE FROM menu_items WHERE id IN ('bar-pije', 'whatsapp-oferte');
 
--- Bar menu, sub-grouped via the tags column (Kafeteri / Freskuese / Birrë / Pije Vendi)
--- Positions 100+ keep the bar items separate from the event-menu rows above.
-
+-- Kafeteri (positions 100-119)
 INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags, available, position) VALUES
   ('caj-bustin',      'drinks', 'Çaj bustin',       '', '70 L',  'Kafeteri', 1, 100),
   ('caj-limon',       'drinks', 'Çaj Limon',        '', '70 L',  'Kafeteri', 1, 101),
@@ -31,27 +26,29 @@ INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags,
   ('uji-lajthiza',    'drinks', 'Uji Lajthiza',     '', '60 L',  'Kafeteri', 1, 118),
   ('uji-selita',      'drinks', 'Uji Selita',       '', '60 L',  'Kafeteri', 1, 119);
 
+-- Freskuese (positions 120-139)
 INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags, available, position) VALUES
-  ('bitter',                       'drinks', 'Bitter',             '', '80 L',  'Freskuese', 1, 120),
-  ('bravo',                        'drinks', 'Bravo',              '', '150 L', 'Freskuese', 1, 121),
-  ('caj-i-ftohte',                 'drinks', 'Çaj i ftohtë',       '', '150 L', 'Freskuese', 1, 122),
-  ('coca-cola',                    'drinks', 'Coca-Cola',          '', '150 L', 'Freskuese', 1, 123),
-  ('dhalle',                       'drinks', 'Dhallë',             '', '60 L',  'Freskuese', 1, 124),
-  ('fanta',                        'drinks', 'Fanta',              '', '150 L', 'Freskuese', 1, 125),
-  ('freskuese',                    'drinks', 'Freskuese',          '', '150 L', 'Freskuese', 1, 126),
-  ('glina-tonik',                  'drinks', 'Glina Tonik',        '', '150 L', 'Freskuese', 1, 127),
-  ('glina-vitamin',                'drinks', 'Glina Vitamin',      '', '130 L', 'Freskuese', 1, 128),
-  ('golden-eagle',                 'drinks', 'Golden Eagle',       '', '150 L', 'Freskuese', 1, 129),
+  ('bitter',                    'drinks', 'Bitter',             '', '80 L',  'Freskuese', 1, 120),
+  ('bravo',                     'drinks', 'Bravo',              '', '150 L', 'Freskuese', 1, 121),
+  ('caj-i-ftohte',              'drinks', 'Çaj i ftohtë',       '', '150 L', 'Freskuese', 1, 122),
+  ('coca-cola',                 'drinks', 'Coca-Cola',          '', '150 L', 'Freskuese', 1, 123),
+  ('dhalle',                    'drinks', 'Dhallë',             '', '60 L',  'Freskuese', 1, 124),
+  ('fanta',                     'drinks', 'Fanta',              '', '150 L', 'Freskuese', 1, 125),
+  ('freskuese',                 'drinks', 'Freskuese',          '', '150 L', 'Freskuese', 1, 126),
+  ('glina-tonik',               'drinks', 'Glina Tonik',        '', '150 L', 'Freskuese', 1, 127),
+  ('glina-vitamin',             'drinks', 'Glina Vitamin',      '', '130 L', 'Freskuese', 1, 128),
+  ('golden-eagle',              'drinks', 'Golden Eagle',       '', '150 L', 'Freskuese', 1, 129),
   ('heineken-pa-alkool-freskuese', 'drinks', 'Heineken pa alkool', '', '250 L', 'Freskuese', 1, 130),
-  ('ivi-kanace',                   'drinks', 'Ivi kanaçe',         '', '150 L', 'Freskuese', 1, 131),
-  ('lemon-soda',                   'drinks', 'Lemon Soda',         '', '150 L', 'Freskuese', 1, 132),
-  ('leng-i-shtrydhur',             'drinks', 'Lëng i shtrydhur',   '', '180 L', 'Freskuese', 1, 133),
-  ('nescafe-kanace',               'drinks', 'Nescafé kanaçe',     '', '200 L', 'Freskuese', 1, 134),
-  ('orange-soda',                  'drinks', 'Orange Soda',        '', '150 L', 'Freskuese', 1, 135),
-  ('pepsi-033',                    'drinks', 'Pepsi 0.33',         '', '150 L', 'Freskuese', 1, 136),
-  ('red-bull',                     'drinks', 'Red Bull',           '', '250 L', 'Freskuese', 1, 137),
-  ('schweppes',                    'drinks', 'Schweppes',          '', '150 L', 'Freskuese', 1, 138);
+  ('ivi-kanace',                'drinks', 'Ivi kanaçe',         '', '150 L', 'Freskuese', 1, 131),
+  ('lemon-soda',                'drinks', 'Lemon Soda',         '', '150 L', 'Freskuese', 1, 132),
+  ('leng-i-shtrydhur',          'drinks', 'Lëng i shtrydhur',   '', '180 L', 'Freskuese', 1, 133),
+  ('nescafe-kanace',            'drinks', 'Nescafé kanaçe',     '', '200 L', 'Freskuese', 1, 134),
+  ('orange-soda',               'drinks', 'Orange Soda',        '', '150 L', 'Freskuese', 1, 135),
+  ('pepsi-033',                 'drinks', 'Pepsi 0.33',         '', '150 L', 'Freskuese', 1, 136),
+  ('red-bull',                  'drinks', 'Red Bull',           '', '250 L', 'Freskuese', 1, 137),
+  ('schweppes',                 'drinks', 'Schweppes',          '', '150 L', 'Freskuese', 1, 138);
 
+-- Birrë (positions 140-159)
 INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags, available, position) VALUES
   ('amstel',                   'drinks', 'Amstel',                   '', '150 L', 'Birrë', 1, 140),
   ('bavaria-pa-alkool-kanace', 'drinks', 'Bavaria pa alkool kanaçe', '', '150 L', 'Birrë', 1, 141),
@@ -72,6 +69,7 @@ INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags,
   ('peroni-kanace',            'drinks', 'Peroni kanaçe',            '', '150 L', 'Birrë', 1, 156),
   ('tuborg',                   'drinks', 'Tuborg',                   '', '150 L', 'Birrë', 1, 157);
 
+-- Pije Vendi (positions 160-169)
 INSERT OR REPLACE INTO menu_items (id, category, name, description, price, tags, available, position) VALUES
   ('fernet-skenderbeu', 'drinks', 'Fernet Skënderbeu', '', '90 L',  'Pije Vendi', 1, 160),
   ('fernet-vendi',      'drinks', 'Fernet Vendi',      '', '80 L',  'Pije Vendi', 1, 161),
