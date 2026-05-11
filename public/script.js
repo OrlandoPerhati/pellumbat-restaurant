@@ -23,6 +23,15 @@ let activeMenuCategory = "small";
 let menuLoaded = false;
 let currentLanguage = localStorage.getItem("pellumbat-language") || "sq";
 
+// Maps a sub-category tag to the cover image shown above its items.
+// Adding a new sub-category? Drop a webp here and into public/assets/categories/.
+const SUBCATEGORY_COVERS = {
+  "Kafeteri": "assets/categories/kafeteri.webp",
+  "Freskuese": "assets/categories/freskuese.webp",
+  "Birrë": "assets/categories/birre.webp",
+  "Pije Vendi": "assets/categories/pije-vendi.webp",
+};
+
 // Translation dictionary: every key represents one visible phrase on the public website.
 const translations = {
   sq: {
@@ -333,7 +342,20 @@ function renderMenu() {
   let html = "";
   let index = 0;
   for (const [tag, items] of groups) {
-    if (tag) html += `<h3 class="menu-group-heading">${escapeHtml(tag)}</h3>`;
+    if (tag) {
+      const cover = SUBCATEGORY_COVERS[tag];
+      if (cover) {
+        // Banner style: image background with the heading overlaid.
+        html += `
+          <div class="menu-group-banner" style="background-image: url('${escapeHtml(cover)}')">
+            <h3>${escapeHtml(tag)}</h3>
+          </div>
+        `;
+      } else {
+        // Fallback for sub-categories without a cover image.
+        html += `<h3 class="menu-group-heading">${escapeHtml(tag)}</h3>`;
+      }
+    }
     html += items.map((item) => renderMenuItemHtml(item, index++, Boolean(tag))).join("");
   }
   menuList.innerHTML = html;
