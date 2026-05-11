@@ -578,7 +578,7 @@ textarea {
   position: relative;
   grid-column: 1 / -1;
   margin: 26px 0 10px;
-  min-height: clamp(140px, 20vh, 180px);
+  min-height: clamp(180px, 26vh, 240px);
   display: flex;
   align-items: flex-end;
   padding: clamp(18px, 3vw, 28px);
