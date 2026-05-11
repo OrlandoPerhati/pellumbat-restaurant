@@ -546,7 +546,6 @@ textarea {
 }
 
 .menu-list {
-  max-width: 1080px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
@@ -579,7 +578,7 @@ textarea {
   position: relative;
   grid-column: 1 / -1;
   margin: 26px 0 10px;
-  min-height: clamp(120px, 18vh, 160px);
+  min-height: clamp(140px, 20vh, 180px);
   display: flex;
   align-items: flex-end;
   padding: clamp(18px, 3vw, 28px);
