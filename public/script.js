@@ -11,7 +11,9 @@ const cancelForm = document.querySelector("[data-cancel-form]");
 const cancelNote = document.querySelector("[data-cancel-note]");
 const reserveDate = document.querySelector("[data-reserve-date]");
 const timeSelect = document.querySelector("[data-time-select]");
-const heroImage = document.querySelector(".hero > img");
+// Could be a single <img> or the new slideshow wrapper — parallax works on either.
+const heroImage = document.querySelector(".hero-slideshow") || document.querySelector(".hero > img");
+const heroSlideshow = document.querySelector("[data-hero-slideshow]");
 
 const tabIndicator = document.createElement("span");
 tabIndicator.className = "tab-indicator";
@@ -685,6 +687,29 @@ window.addEventListener(
   },
   { passive: true },
 );
+
+// --- Hero slideshow ---------------------------------------------------------
+// Cycle through the slides every 7 seconds with a crossfade.
+// Pauses when the visitor's mouse is over the hero, and is fully disabled for prefers-reduced-motion.
+if (heroSlideshow && !reduceMotion.matches) {
+  const slides = Array.from(heroSlideshow.querySelectorAll("img"));
+  if (slides.length > 1) {
+    let activeIndex = 0;
+    let paused = false;
+
+    heroSlideshow.addEventListener("mouseenter", () => (paused = true));
+    heroSlideshow.addEventListener("mouseleave", () => (paused = false));
+    // Pause when the tab is hidden — saves work and avoids racing back when the user returns.
+    document.addEventListener("visibilitychange", () => (paused = document.hidden));
+
+    setInterval(() => {
+      if (paused) return;
+      slides[activeIndex].classList.remove("is-active");
+      activeIndex = (activeIndex + 1) % slides.length;
+      slides[activeIndex].classList.add("is-active");
+    }, 7000);
+  }
+}
 
 // --- Animated counter -------------------------------------------------------
 // Any element with [data-counter="N"] counts from 0 to N once it scrolls into view.
