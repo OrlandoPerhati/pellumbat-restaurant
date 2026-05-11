@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="sq">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#1f2522" />
+    <title>404 — Pëllumbat e Paqes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=Playfair+Display:wght@500;700&display=swap"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .notfound {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: clamp(40px, 8vw, 96px) clamp(18px, 6vw, 86px);
+        background: var(--charcoal);
+        background-image: linear-gradient(180deg, rgba(22, 25, 23, 0.92), rgba(22, 25, 23, 0.92)),
+          url("/assets/venue/exterior-main.webp");
+        background-size: cover;
+        background-position: center;
+        color: var(--cream);
+        text-align: center;
+      }
+      .notfound .code {
+        font-family: var(--display-font);
+        font-size: clamp(6rem, 22vw, 14rem);
+        font-weight: 700;
+        line-height: 0.92;
+        margin: 0;
+        color: var(--gold);
+        letter-spacing: 0.02em;
+      }
+      .notfound h1 {
+        font-family: var(--display-font);
+        font-size: clamp(2rem, 6vw, 3.4rem);
+        margin: 18px 0 12px;
+      }
+      .notfound p {
+        max-width: 520px;
+        margin: 0 auto 28px;
+        color: rgba(255, 250, 240, 0.78);
+        line-height: 1.7;
+        font-size: 1.05rem;
+      }
+      .notfound .actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="notfound">
+      <div>
+        <p class="code">404</p>
+        <h1>Faqja nuk u gjet</h1>
+        <p>
+          Adresa që kërkoni nuk ekziston, ose është lëvizur. Kthehuni në faqen kryesore për të parë menynë, galerinë
+          dhe për të rezervuar një tavolinë.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="/">Kthehu në faqen kryesore</a>
+          <a
+            class="button button-secondary"
+            href="https://wa.me/355686264646"
+            target="_blank"
+            rel="noreferrer"
+            >WhatsApp</a
+          >
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

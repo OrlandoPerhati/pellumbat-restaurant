@@ -1055,6 +1055,8 @@ textarea {
 
 .site-footer {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
   padding: 26px clamp(18px, 6vw, 86px);
@@ -1069,6 +1071,45 @@ textarea {
 .site-footer p:first-child {
   color: var(--cream);
   font-weight: 900;
+}
+
+.footer-socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-socials a {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 250, 240, 0.18);
+  border-radius: 999px;
+  color: rgba(255, 250, 240, 0.85);
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 160ms ease;
+}
+
+.footer-socials a:hover,
+.footer-socials a:focus-visible {
+  background: var(--clay);
+  border-color: var(--clay);
+  color: var(--cream);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.footer-socials svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .admin-body {
