@@ -1,0 +1,43 @@
+name: D1 backup
+
+# Runs nightly at 03:00 UTC (~05:00 in Tirana) and on manual dispatch.
+# Exports the production D1 database via Wrangler and uploads the dump as a
+# GitHub Actions artifact (90-day retention on the free tier — effectively a free,
+# automated nightly backup with no laptop required).
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Wrangler
+        run: npm install --no-save wrangler@^3
+
+      - name: Export D1
+        env:
+          # Set CLOUDFLARE_API_TOKEN as a repository secret with the
+          # "D1: Edit" permission scoped to this account.
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          mkdir -p backups
+          npx wrangler d1 export pellumbat-e-paqes --remote \
+            --output "backups/pellumbat-e-paqes-$(date -u +%Y-%m-%dT%H-%M-%S).sql"
+
+      - name: Upload backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: d1-backup-${{ github.run_id }}
+          path: backups/*.sql
+          retention-days: 90

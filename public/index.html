@@ -9,6 +9,12 @@
     />
     <meta name="theme-color" content="#1f2522" />
 
+    <!-- Favicon: an SVG mark with the PP monogram. Modern browsers prefer SVG; old ones will quietly skip it. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Preload the LCP hero image so the browser starts the download alongside the HTML, not after. -->
+    <link rel="preload" as="image" href="/assets/venue/exterior-main.webp" fetchpriority="high" />
+
     <!-- Open Graph: controls how the link looks when shared on WhatsApp, Facebook, LinkedIn, etc. -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="sq_AL" />
@@ -86,6 +92,9 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>
   <body>
+    <!-- Skip link: invisible until focused. Lets keyboard users jump past the nav to the main content. -->
+    <a class="skip-link" href="#top">Skip to content</a>
+
     <!-- Header: fixed navigation that stays available while visitors scroll. -->
     <header class="site-header" data-header>
       <a class="brand" href="#top" aria-label="Pëllumbat e Paqes home">
@@ -172,23 +181,23 @@
         </div>
         <div class="gallery-grid">
           <figure class="gallery-large">
-            <img src="assets/venue/wedding-hall-blue.webp" alt="Wedding hall with blue tablecloths and a glowing forever sign." loading="lazy" />
+            <img src="assets/venue/wedding-hall-blue.webp" alt="Wedding hall with blue tablecloths and a glowing forever sign." loading="lazy" width="800" height="600" />
             <figcaption data-i18n="gallery.wedding">Dasma</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/engagement-stage.webp" alt="Engagement stage with white flowers and illuminated ring sign." loading="lazy" />
+            <img src="assets/venue/engagement-stage.webp" alt="Engagement stage with white flowers and illuminated ring sign." loading="lazy" width="800" height="600" />
             <figcaption data-i18n="gallery.engagement">Fejesa</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/birthday-setup.webp" alt="Pink first birthday balloon display with butterflies." loading="lazy" />
+            <img src="assets/venue/birthday-setup.webp" alt="Pink first birthday balloon display with butterflies." loading="lazy" width="800" height="600" />
             <figcaption data-i18n="gallery.birthday">Ditëlindje</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/long-dining-table.webp" alt="Long dining table set with plates, drinks, flowers, and candles." loading="lazy" />
+            <img src="assets/venue/long-dining-table.webp" alt="Long dining table set with plates, drinks, flowers, and candles." loading="lazy" width="800" height="600" />
             <figcaption data-i18n="gallery.dining">Tavolina festive</figcaption>
           </figure>
           <figure>
-            <img src="assets/venue/anniversary-setup.webp" alt="Sixtieth celebration setup with candelabra and balloon decor." loading="lazy" />
+            <img src="assets/venue/anniversary-setup.webp" alt="Sixtieth celebration setup with candelabra and balloon decor." loading="lazy" width="800" height="600" />
             <figcaption data-i18n="gallery.anniversary">Përvjetorë</figcaption>
           </figure>
         </div>

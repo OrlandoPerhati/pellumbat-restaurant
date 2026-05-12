@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#1f2522" />
+  <text
+    x="50%"
+    y="56%"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    fill="#c48b3b"
+    font-family="Georgia, serif"
+    font-size="14"
+    font-weight="700"
+    letter-spacing="-0.5"
+  >PP</text>
+</svg>

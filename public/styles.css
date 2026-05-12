@@ -66,6 +66,27 @@ textarea {
   border: 0;
 }
 
+/* Skip link: hidden off-screen until a keyboard user tabs to it. */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 8px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 6px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: top 180ms ease;
+}
+
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
 .site-header {
   /* Main navigation: fixed at the top and changes style after scrolling. */
   position: fixed;

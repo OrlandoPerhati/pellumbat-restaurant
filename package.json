@@ -7,13 +7,15 @@
     "start": "node server.js",
     "dev": "wrangler pages dev",
     "check": "node --check server.js && node --check public/script.js && node --check public/admin.js",
+    "test": "node --test tests/*.test.js",
     "db:create": "wrangler d1 create pellumbat-e-paqes",
     "db:schema:local": "wrangler d1 execute pellumbat-e-paqes --local --file=./schema.sql",
     "db:seed:local": "wrangler d1 execute pellumbat-e-paqes --local --file=./seed.sql",
     "db:schema:remote": "wrangler d1 execute pellumbat-e-paqes --remote --file=./schema.sql",
     "db:seed:remote": "wrangler d1 execute pellumbat-e-paqes --remote --file=./seed.sql",
     "deploy": "wrangler pages deploy",
-    "images": "node scripts/convert-images.js"
+    "images": "node scripts/convert-images.js",
+    "backup": "node scripts/backup-db.js"
   },
   "devDependencies": {
     "sharp": "^0.34.5",

@@ -12,6 +12,9 @@ node_modules/
 data/reservations.json
 server.*.log
 
+# Local D1 backups — they live in GitHub Actions artifacts in CI; locally just clutter the repo.
+backups/
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db
